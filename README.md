@@ -3,10 +3,9 @@ ngx_log_if_module is an independent module which allows you to control when not 
 access log, similar to the "CustomLog [env=XXX]" directive in Apache.
 
 ##Directive##
-Syntax:  access_log_bypass_if (condition)
-Default: -
-Scope:   main/srv/loc
-
+    Syntax:  access_log_bypass_if (condition)
+    Default: -
+    Scope:   main/srv/loc
 "access_log_bypass_if" defines the condition that nginx will not write down access log in case
 it is true. The condition is enclosed by brackets... In brief, the syntax of condition in
 "access_log_bypass_if" is the same as it in the "if" directive.
