@@ -1,9 +1,8 @@
-README
-===============================================================================================
+#README#
 ngx_log_if_module is an independent module which allows you to control when not to write down
 access log, similar to the "CustomLog [env=XXX]" directive in Apache.
 
-===Directive===================================================================================
+##Directive##
 Syntax:  access_log_bypass_if (condition)
 Default: -
 Scope:   main/srv/loc
@@ -12,6 +11,7 @@ Scope:   main/srv/loc
 it is true. The condition is enclosed by brackets... In brief, the syntax of condition in
 "access_log_bypass_if" is the same as it in the "if" directive.
 
+##Example##
 This directive allows you to define multiple conditions in the form of using the directive in
 multiple times in the same block. For example:
 
