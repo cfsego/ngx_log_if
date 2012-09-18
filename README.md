@@ -15,25 +15,21 @@ it is true. The condition is enclosed by brackets... In brief, the syntax of con
 This directive allows you to define multiple conditions in the form of using the directive in
 multiple times in the same block. For example:
 
-<pre>
-server {
-    access_log_bypass_if ($status = 400);
-    access_log_bypass_if ($host ~* 'nolog.com');
-}
-</pre>
+    server {
+        access_log_bypass_if ($status = 400);
+        access_log_bypass_if ($host ~* 'nolog.com');
+    }
 
 However, if you define them both in the blocks in the father child relationship, the child block
 will not inherit and merge the configuration in parent block, of course. FOr example:
 
-<pre>
-server {
-    access_log_bypass_if ($status = 400);
-
-    location / {
-        access_log_bypass_if ($host ~* 'nolog.com');
+    server {
+        access_log_bypass_if ($status = 400);
+    
+        location / {
+            access_log_bypass_if ($host ~* 'nolog.com');
+        }
     }
-}
-</pre>
 
 In this case above, in location "/", only "($host ~* 'nolog.com')" is available, but "($status = 400)"
 is ignored and makes no difference.
