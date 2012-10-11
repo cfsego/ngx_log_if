@@ -32,3 +32,7 @@ will not inherit and merge the configuration in parent block, of course. FOr exa
 
 In this case above, in location "/", only "($host ~* 'nolog.com')" is available, but "($status = 400)"
 is ignored and makes no difference.
+
+#CHANGES#
+1.0.1     2012-10-10    bugfixed: uninitialized value is used
+1.0.0     2012-09-18    initial version
