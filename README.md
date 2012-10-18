@@ -8,7 +8,7 @@ access log, similar to the "CustomLog [env=XXX]" directive in Apache.
     Scope:   main/srv/loc
 "access_log_bypass_if" defines the condition that nginx will not write down access log in case
 it is true. The condition is enclosed by brackets... In brief, the syntax of condition in
-"access_log_bypass_if" is the same as it in the "if" directive. if flag "and" is added, this
+"access_log_bypass_if" is the same as it in the "if" directive. If flag "and" is added, this
 line will work together will the next line.
 
 ##Example##
@@ -40,6 +40,8 @@ In this case above, in location "/", only "($host ~* 'nolog.com')" is available,
 is ignored and makes no difference.
 
 #CHANGES#
-1.0.2     2012-10-17    feature: flag "and" added;
+1.0.2     2012-10-17    feature: flag "and" added
+
 1.0.1     2012-10-10    bugfixed: uninitialized value is used
+
 1.0.0     2012-09-18    initial version
