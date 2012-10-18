@@ -17,6 +17,7 @@ typedef struct {
 typedef struct {
     ngx_array_t             *codes;
     ngx_flag_t               log;
+    ngx_flag_t               is_and;
 } ngx_http_aclog_bypass_condition_t;
 
 
@@ -199,8 +200,14 @@ ngx_http_aclog_bypass_handler(ngx_http_request_t *r)
 
         e.sp--;
         if (e.sp->len && (e.sp->len != 1 || e.sp->data[0] != '0')) {
-            lcf->off = 1;
-            return NGX_OK;
+            if (!condition[i].is_and) {
+                lcf->off = 1;
+                return NGX_OK;
+            }
+        } else {
+            while (condition[i].is_and) {
+                i++;
+            }
         }
     }
 
@@ -212,6 +219,7 @@ ngx_http_aclog_bypass_handler(ngx_http_request_t *r)
 static char *
 ngx_http_aclog_bypass(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
+    ngx_str_t                             *value;
     ngx_http_aclog_bypass_conf_t          *alcf = conf;
     ngx_http_aclog_bypass_condition_t     *abc;
 
@@ -228,6 +236,12 @@ ngx_http_aclog_bypass(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
         return NGX_CONF_ERROR;
     }
     ngx_memzero(abc, sizeof(ngx_http_aclog_bypass_condition_t));
+
+    value = cf->args->elts;
+    if (ngx_strcmp(value[cf->args->nelts - 1].data, "and") == 0) {
+        cf->args->nelts--;
+        abc->is_and = 1;
+    }
 
     if (ngx_http_aclog_bypass_condition(cf, abc) != NGX_CONF_OK) {
         return NGX_CONF_ERROR;
