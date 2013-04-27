@@ -40,7 +40,7 @@ In this case above, in location "/", only "($host ~* 'nolog.com')" is available,
 is ignored and makes no difference.
 
 #CHANGES#
-1.0.3     2013-04-23    bugfixed: https://github.com/cfsego/ngx_log_if/issues/1, thanks to Tomas
+1.0.3     2013-04-23    bugfixed: https://github.com/cfsego/ngx_log_if/issues/1, thanks to yixing
 
 1.0.2     2012-10-17    feature: flag "and" added
 
