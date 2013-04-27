@@ -311,6 +311,7 @@ ngx_http_aclog_bypass_condition_value(ngx_conf_t *cf,
     sc.values = &abc->codes;
     sc.variables = n;
     sc.complete_lengths = 1;
+    sc.complete_values = 1;
 
     if (ngx_http_script_compile(&sc) != NGX_OK) {
         return NGX_CONF_ERROR;
