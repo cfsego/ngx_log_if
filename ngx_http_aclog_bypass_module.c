@@ -115,7 +115,7 @@ ngx_http_aclog_bypass_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
 
     if (prev->conditions) {
         condition = prev->conditions->elts;
-        if (condition[conf->conditions->nelts - 1].is_and) {
+        if (condition[prev->conditions->nelts - 1].is_and) {
             ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
                                "can not use \"and\" flag on the last condition");
             return NGX_CONF_ERROR;
