@@ -29,6 +29,7 @@ typedef struct {
 typedef struct {
     ngx_uint_t               log_off;
     ngx_array_t             *conditions;
+    ngx_flag_t               complete;
 } ngx_http_aclog_bypass_conf_t;
 
 
@@ -131,9 +132,23 @@ ngx_http_aclog_bypass_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
     }
 
     if (conf->conditions == prev->conditions) {
+        if (prev->conditions != NULL || !prev->complete) {
+            prev->complete = 1;
+            condition = prev->conditions->elts;
+            for (i = 0; i < prev->conditions->nelts; i++) {
+                code = ngx_array_push_n(condition[i].codes, sizeof(uintptr_t));
+                if (code == NULL) {
+                    return NGX_CONF_ERROR;
+                }
+
+                *code = (uintptr_t) NULL;
+            }
+        }
+
         return NGX_CONF_OK;
     }
 
+    conf->complete = 1;
     condition = conf->conditions->elts;
     for (i = 0; i < conf->conditions->nelts; i++) {
         code = ngx_array_push_n(condition[i].codes, sizeof(uintptr_t));
