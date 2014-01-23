@@ -132,7 +132,7 @@ ngx_http_aclog_bypass_merge_loc_conf(ngx_conf_t *cf, void *parent, void *child)
     }
 
     if (conf->conditions == prev->conditions) {
-        if (prev->conditions != NULL || !prev->complete) {
+        if (prev->conditions != NULL && !prev->complete) {
             prev->complete = 1;
             condition = prev->conditions->elts;
             for (i = 0; i < prev->conditions->nelts; i++) {
