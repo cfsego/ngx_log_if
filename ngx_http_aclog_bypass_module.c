@@ -352,11 +352,13 @@ ngx_http_aclog_bypass_condition(ngx_conf_t *cf,
     size_t                         len;
     ngx_str_t                     *value;
     ngx_uint_t                     cur, last;
-    ngx_regex_compile_t            rc;
     ngx_http_script_code_pt       *code;
     ngx_http_script_file_code_t   *fop;
+#if (NGX_PCRE)
+    ngx_regex_compile_t            rc;
     ngx_http_script_regex_code_t  *regex;
     u_char                         errstr[NGX_MAX_CONF_ERRSTR];
+#endif
 
     value = cf->args->elts;
     last = cf->args->nelts - 1;
@@ -458,6 +460,7 @@ ngx_http_aclog_bypass_condition(ngx_conf_t *cf,
             || (len == 2 && p[0] == '!' && p[1] == '~')
             || (len == 3 && p[0] == '!' && p[1] == '~' && p[2] == '*'))
         {
+#if (NGX_PCRE)
             regex = ngx_http_script_start_code(cf->pool, &abc->codes,
                                          sizeof(ngx_http_script_regex_code_t));
             if (regex == NULL) {
@@ -487,6 +490,12 @@ ngx_http_aclog_bypass_condition(ngx_conf_t *cf,
             regex->name = value[last];
 
             return NGX_CONF_OK;
+#else
+            ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
+                               "using regex \"%V\" requires PCRE library",
+                               &value[last]);
+            return NGX_CONF_ERROR;
+#endif
         }
 
         ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
