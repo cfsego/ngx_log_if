@@ -9,10 +9,10 @@ typedef struct {
     ngx_open_file_cache_t   *open_file_cache;
     time_t                   open_file_cache_valid;
     ngx_uint_t               open_file_cache_min_uses;
-#if (tengine_version >= 1002004)
+#if (tengine_version >= 1002004 && tengine_version < 2002000)
     ngx_uint_t               escape;
 #endif
-#if (tengine_version >= 1004000)
+#if (tengine_version >= 1004000 && tengine_version < 2002000)
     ngx_flag_t               log_empty_request;
 #endif
     ngx_uint_t               off;
